@@ -97,21 +97,40 @@ class QStarModel(nn.Module):
         instruction_context = self.instruction_encoder.encode_for_loss(instruction_state)
 
         # Compute loss estimate considering the instruction context
-        loss_estimate = self.q_learning_module.compute_loss_estimate(current_state, action, reward, next_state, instruction_context)
+        model_output = self.q_learning_module.compute_loss_estimate(current_state, action, reward, next_state, instruction_context)
+        loss_estimate = self.dynamic_loss_function(model_output, instruction_context, context_parameters)
         return {'action': action, 'loss': loss_estimate}
+
+    def dynamic_loss_function(self, model_output, instruction_context, context_parameters):
+        # Example: Adjust the loss computation based on the current instruction context
+        # and context-specific parameters
+        base_loss = self.base_loss_computation(model_output)  # Define base loss computation
+        context_adjustment = self.context_specific_adjustment(instruction_context, context_parameters)
+        adjusted_loss = base_loss * context_adjustment
+        return adjusted_loss
+
+    def base_loss_computation(self, model_output):
+        # Define how the base loss is computed from the model's output
+        # ...
+        pass
+
+    def context_specific_adjustment(self, instruction_context, context_parameters):
+        # Adjust the loss based on the instruction context and context-specific parameters
+        # ...
+        return adjustment_factor
 
     def decide_action_with_a_star(self, current_state, goal_state):
         path = self.q_learning_module.graph_manager.shortest_path(current_state, goal_state)
         next_action = path[1] if len(path) > 1 else None
         return next_action
 
-
-def process_stream_data(model, data_stream, optimizer):
+def process_stream_data(model, data_stream, optimizer, context_manager):
     total_loss = 0.0
     for i, data in enumerate(data_stream):
         try:
             input_ids, attention_mask, instruction_ids, goal_state, reward, next_state = data
-            model_output = model(input_ids, attention_mask, instruction_ids, goal_state, reward, next_state)
+            context_parameters = context_manager.current_context.parameters
+            model_output = model(input_ids, attention_mask, instruction_ids, goal_state, reward, next_state, context_parameters)
 
             loss = model_output['loss']
             optimizer.zero_grad()

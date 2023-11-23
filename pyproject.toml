@@ -11,6 +11,8 @@ python = "^3.10"
 torch = "^2.1.1"
 transformers = "^4.35.2"
 loguru = "^0.7.2"
+redis = "^5.0.1"
+sqlalchemy = "^2.0.23"
 
 
 [build-system]
