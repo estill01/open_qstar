@@ -1,6 +1,7 @@
 import redis
 from sqlalchemy import create_engine
 
+# Retain learning across instruction tunings
 class HierarchicalInstructionTuner:
     def __init__(self, redis_conn, sql_conn):
         self.contexts = {}  # Dictionary to store learning contexts
