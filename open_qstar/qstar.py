@@ -27,6 +27,14 @@ class DynamicCostQLearning(nn.Module):
         self.state_graph = nx.Graph()
         self.graph_manager = GraphManager()
 
+    def compute_loss_estimate(self, state, action, reward, next_state, instruction_context):
+        # Use the instruction context to adjust the loss estimation
+        # For example, certain instructions might amplify the importance of rewards or penalties
+        td_target = reward + self.q_table[next_state, torch.argmax(self.q_table[next_state])]
+        td_error = td_target - self.q_table[state, action]
+        adjusted_loss = abs(td_error) * instruction_context  # Example of adjustment
+        return adjusted_loss
+
     def update_policy_and_graph(self, state, action, reward, next_state):
         # Update Q-table
         best_next_action = torch.argmax(self.q_table[next_state])
@@ -57,6 +65,13 @@ class InstructionEncoder(nn.Module):
     def forward(self, instruction_state):
         return self.encoder(instruction_state)
 
+    def encode_for_loss(self, instruction_state):
+        # This method encodes instructions specifically for the context of loss estimation
+        # For example, certain instructions might indicate that certain outcomes are more 
+        # critical than others, which can be reflected in the loss computation
+        encoded_loss_context = self.encoder(instruction_state)  # Example implementation
+        return encoded_loss_context
+
 def update_goal_state_based_on_instruction(goal_state, instruction):
     return goal_state + instruction
 
@@ -78,22 +93,40 @@ class QStarModel(nn.Module):
         heuristic_value = a_star_heuristic(current_state, dynamic_goal_state)
         action = self.decide_action_with_a_star(current_state, dynamic_goal_state)
 
-        if reward is not None and next_state is not None:
-            self.q_learning_module.update_policy_and_graph(current_state, action, reward, next_state)
+        instruction_state = self.transformer_model(instruction_ids, attention_mask=None).last_hidden_state.mean(dim=1)
+        instruction_context = self.instruction_encoder.encode_for_loss(instruction_state)
 
-        return action
+        # Compute loss estimate considering the instruction context
+        loss_estimate = self.q_learning_module.compute_loss_estimate(current_state, action, reward, next_state, instruction_context)
+        return {'action': action, 'loss': loss_estimate}
 
     def decide_action_with_a_star(self, current_state, goal_state):
         path = self.q_learning_module.graph_manager.shortest_path(current_state, goal_state)
         next_action = path[1] if len(path) > 1 else None
         return next_action
 
+
 def process_stream_data(model, data_stream, optimizer):
-    for data in data_stream:
-        input_ids, attention_mask, instruction_ids, goal_state, reward, next_state = data
-        action = model(input_ids, attention_mask, instruction_ids, goal_state, reward, next_state)
-        # Define loss computation and update model
-        # loss = ...
-        # optimizer.zero_grad()
-        # loss.backward()
-        # optimizer.step()
+    total_loss = 0.0
+    for i, data in enumerate(data_stream):
+        try:
+            input_ids, attention_mask, instruction_ids, goal_state, reward, next_state = data
+            model_output = model(input_ids, attention_mask, instruction_ids, goal_state, reward, next_state)
+
+            loss = model_output['loss']
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+
+            total_loss += loss.item()
+            if i % 100 == 0:
+                logger.info(f"Stream Batch {i}, Current Loss: {loss.item()}")
+
+        except Exception as e:
+            logger.error(f"Error in continuous learning process at batch {i}: {e}")
+            continue
+
+    average_loss = total_loss / len(data_stream)
+    logger.info(f"Continuous learning process completed. Average Loss: {average_loss}")
+
+
