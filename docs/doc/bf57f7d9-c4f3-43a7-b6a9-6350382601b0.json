@@ -1,0 +1,10 @@
+{
+    "summary": "This code defines a GraphManager class that utilizes NetworkX to manage and calculate shortest paths between nodes in a graph. It stores nodes as states and adds/updates edges with negative rewards as costs.",
+    "details": [
+        {
+            "comment": "This code defines a GraphManager class that utilizes NetworkX to manage and calculate shortest paths between nodes in a graph. It stores nodes as states and adds/updates edges with negative rewards as costs.",
+            "location": "\"/media/root/Toshiba XG3/works/open_qstar/docs/src/open_qstar/graph_manager.py\":0-15",
+            "content": "import networkx as nx\nclass GraphManager:\n    def __init__(self):\n        self.graph = nx.Graph()\n    def add_or_update_edge(self, state, next_state, reward):\n        edge_weight = -reward  # Using negative reward as cost\n        if not self.graph.has_node(state):\n            self.graph.add_node(state)\n        if not self.graph.has_node(next_state):\n            self.graph.add_node(next_state)\n        self.graph.add_edge(state, next_state, weight=edge_weight)\n    def shortest_path(self, source, target):\n        return nx.shortest_path(self.graph, source=source, target=target, weight='weight')"
+        }
+    ]
+}

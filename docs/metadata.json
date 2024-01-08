@@ -1,0 +1,40 @@
+{
+    "url": {
+        "full": "https://github.com/estill01/open_qstar",
+        "partial": "estill01/open_qstar"
+    },
+    "file_mapping": {
+        "0": {
+            "filepath": "/README.md",
+            "entry_id": 0,
+            "language_id": "markdown"
+        },
+        "1": {
+            "filepath": "/pyproject.toml",
+            "entry_id": 4,
+            "language_id": "toml"
+        },
+        "2": {
+            "filepath": "/open_qstar/context.py",
+            "entry_id": 8,
+            "language_id": "python"
+        },
+        "3": {
+            "filepath": "/open_qstar/graph_manager.py",
+            "entry_id": 14,
+            "language_id": "python"
+        },
+        "4": {
+            "filepath": "/open_qstar/instruction_tuner.py",
+            "entry_id": 18,
+            "language_id": "python"
+        },
+        "5": {
+            "filepath": "/open_qstar/qstar.py",
+            "entry_id": 24,
+            "language_id": "python"
+        }
+    },
+    "project_name": "open_qstar",
+    "split_count": 1
+}
