@@ -1,0 +1,19 @@
+{
+    "/README.md": "Open Q* README",
+    "/open_qstar/context.py": "Context Manager Implementation",
+    "/open_qstar/context.py:1-28": "Context Manager and Learning Contexts",
+    "/open_qstar/context.py:29-51": "Context Data Initialization and Storage",
+    "/open_qstar/graph_manager.py": "Shortest Path Graph Manager with Negative Edges",
+    "/open_qstar/instruction_tuner.py": "Hierarchical Instruction Tuner with Redis",
+    "/open_qstar/instruction_tuner.py:1-20": "Hierarchical Instruction Tuner with Redis & SQLAlchemy",
+    "/open_qstar/instruction_tuner.py:22-43": "Redis-SQL Connections for Instruction Tuner Initiation",
+    "/open_qstar/qstar.py": "Dynamic Cost Estimation with Transformers",
+    "/open_qstar/qstar.py:1-31": "Dynamic Q-Learning for Cost Estimation with Transformers",
+    "/open_qstar/qstar.py:109-133": "Adjusted Loss Computation with A* Algorithm",
+    "/open_qstar/qstar.py:133-149": "Real-time Model Training Loop",
+    "/open_qstar/qstar.py:32-51": "Updating Reinforcement Learning Agent Elements",
+    "/open_qstar/qstar.py:52-75": "Dynamic State Graph Expansion with A* Heuristic",
+    "/open_qstar/qstar.py:76-93": "Dynamic Cost Q Learning for Goal-Oriented Tasks",
+    "/open_qstar/qstar.py:94-108": "Q-learning Agent with Dynamic Goal State and Contextual Representation",
+    "/pyproject.toml": "open-qstar: pyproject.toml Configuration"
+}
