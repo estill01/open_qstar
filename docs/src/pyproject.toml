@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "open-qstar"
+version = "0.1.0"
+description = ""
+authors = ["estill01 <ehs.stillman@gmail.com>"]
+readme = "README.md"
+packages = [{include = "open_qstar"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+torch = "^2.1.1"
+transformers = "^4.35.2"
+loguru = "^0.7.2"
+redis = "^5.0.1"
+sqlalchemy = "^2.0.23"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

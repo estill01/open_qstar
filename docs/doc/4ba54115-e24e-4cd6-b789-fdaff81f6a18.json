@@ -1,0 +1,10 @@
+{
+    "summary": "This code is a \"pyproject.toml\" configuration file for a Python project named \"open-qstar\". It specifies the version, dependencies and build system requirements.",
+    "details": [
+        {
+            "comment": "This code is a \"pyproject.toml\" configuration file for a Python project named \"open-qstar\". It specifies the version, dependencies and build system requirements.",
+            "location": "\"/media/root/Toshiba XG3/works/open_qstar/docs/src/pyproject.toml\":0-19",
+            "content": "[tool.poetry]\nname = \"open-qstar\"\nversion = \"0.1.0\"\ndescription = \"\"\nauthors = [\"estill01 <ehs.stillman@gmail.com>\"]\nreadme = \"README.md\"\npackages = [{include = \"open_qstar\"}]\n[tool.poetry.dependencies]\npython = \"^3.10\"\ntorch = \"^2.1.1\"\ntransformers = \"^4.35.2\"\nloguru = \"^0.7.2\"\nredis = \"^5.0.1\"\nsqlalchemy = \"^2.0.23\"\n[build-system]\nrequires = [\"poetry-core\"]\nbuild-backend = \"poetry.core.masonry.api\""
+        }
+    ]
+}

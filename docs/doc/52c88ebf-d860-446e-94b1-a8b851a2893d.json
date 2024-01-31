@@ -1,0 +1,10 @@
+{
+    "summary": "This is a README for \"Open Q\\*\", a transformer-based LLM with Q-Learning and A\\* algorithms. It's a work in progress repo.",
+    "details": [
+        {
+            "comment": "This is a README for \"Open Q\\*\", a transformer-based LLM with Q-Learning and A\\* algorithms. It's a work in progress repo.",
+            "location": "\"/media/root/Toshiba XG3/works/open_qstar/docs/src/README.md\":0-6",
+            "content": "# Open Q\\*\n> A transformer-based LLM structurally infused with Q-Learning and A\\* algorithms\nIs this Q\\*? Let's find out!\n**A Work In Progress Repo**"
+        }
+    ]
+}
